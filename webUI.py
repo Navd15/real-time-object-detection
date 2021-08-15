@@ -5,6 +5,8 @@ from utils.nnUtils import sendNN
 import cv2
 
 
+'''file handles the working of code required for live webcam detection.'''
+
 def genCamLabel(win):
     win.camLabel = ttk.Label(win)
     win.camLabel.grid(row=3,column=0)
@@ -14,7 +16,7 @@ def genCamLabel(win):
     colors = np.random.uniform(0, 255, size=(len(classes), 3))
 
     def _startFrame():
-        # Get the latest frame and convert into Image
+        
         _temp_frame=cap.read()[1]
         height,width,channel=_temp_frame.shape
         cv2image = cv2.cvtColor(_temp_frame, cv2.COLOR_BGR2RGB)
@@ -34,13 +36,13 @@ def genCamLabel(win):
     
                 confidence = scores[class_id]
                 if confidence > 0.1:
-                # Object detected
+                
                     center_x = int(detection[0] * width)
                     center_y = int(detection[1] * height)
                     w = int(detection[2] * width)
                     h = int(detection[3] * height)
 
-                    # Rectangle coordinates
+                  
                     x = int(center_x - w / 2)
                     y = int(center_y - h / 2)
 
@@ -66,7 +68,7 @@ def genCamLabel(win):
                 3,
             )           
         img = Image.fromarray(cv2image)
-        # Convert image to PhotoImage
+       
         imgtk = ImageTk.PhotoImage(image=img)
         win.camLabel.imgtk = imgtk
         win.camLabel.configure(image=imgtk)
